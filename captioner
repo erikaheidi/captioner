@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Minicli\App;
+
+use App\Service\CaptionerService;
+use App\Service\LoggerService;
+
+$app = new App(require __DIR__ . '/config.php');
+$app->setSignature("Captioner\n./captioner help\n");
+
+$app->addService('captioner', new CaptionerService());
+$app->addService('logger', new LoggerService());
+
+
+$app->runCommand(['captioner', 'captioner']);
